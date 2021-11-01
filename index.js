@@ -12,6 +12,9 @@ app.use("/medecin", medecin);
 app.use("/hopital", hopital);
 app.use("/admin", admin);
 app.use("/patient", patient);
+app.use("*", (request, response) =>
+  response.status(404).send({ message: "invalid route" })
+);
 
 mongoose.connect(process.env.DB_CONNECTION, () =>
   console.log("connected to cluster")
