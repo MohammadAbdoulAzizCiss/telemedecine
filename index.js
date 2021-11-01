@@ -1,8 +1,19 @@
+require("dotenv").config();
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
+const app = express();
+const medecin = require("./routes/medecin.route");
+const hopital = require("./routes/hopital.route");
+const admin = require("./routes/admin.route");
+const patient = require("./routes/patient.route");
 
-mongoose.connect("mongodb://127.0.0.1:27017/telemedecine", () =>
+app.use(express.json());
+app.use("/medecin", medecin);
+app.use("/hopital", hopital);
+app.use("/admin", admin);
+app.use("/patient", patient);
+
+mongoose.connect(process.env.DB_CONNECTION, () =>
   console.log("connected to cluster")
 );
 
