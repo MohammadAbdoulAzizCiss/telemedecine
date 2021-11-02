@@ -20,4 +20,4 @@ mongoose.connect(process.env.DB_CONNECTION, () =>
   console.log("connected to cluster")
 );
 
-app.listen(8000, () => console.log("server on port 8000"));
+app.listen(process.env.PORT, () => console.log("server on port 8000"));
