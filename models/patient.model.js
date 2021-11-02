@@ -19,14 +19,17 @@ const PatientSchema = mongoose.Schema({
   },
   CNI: {
     type: String,
+    unique: true,
     required: true,
   },
   email: {
     type: String,
+    unique: true,
     required: true,
   },
   login: {
     type: String,
+    unique: true,
     required: true,
   },
   password: {
