@@ -1,9 +1,8 @@
 require("dotenv").config();
+const bcrypt = require("bcrypt");
 const Patient = require("../models/patient.model");
 
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-
 const signup = async (request, response) => {
   const user = request.body.user;
   user.password = bcrypt.hashSync(user.password, 10);
@@ -18,15 +17,15 @@ const signup = async (request, response) => {
     password: user.password,
   });
   Patient.create(DBPatient, (error, newDocument) => {
-    if (error) response.status(500).send({ error });
-    else response.status(201).send({ message: "patient patient added" });
+    if (error) response.status(500).json({ error });
+    else response.status(201).json({ message: "patient patient added" });
   });
 };
 
 const signin = async (request, response) => {
   const user = request.body.user;
   const DBPatient = await Patient.findOne({ login: user.login.toLowerCase() });
-  if (!DBPatient) response.send({ error: "user not found" });
+  if (!DBPatient) response.json({ error: "user not found" });
   bcrypt.compare(user.password, DBPatient.password).then((isValid) => {
     if (isValid) {
       const payload = {
@@ -35,13 +34,13 @@ const signin = async (request, response) => {
       };
       jwt.sign(payload, process.env.SECRET, (error, token) => {
         if (error) return response.json({ message: error });
-        return response.json({
+        response.json({
           message: "success",
           token: "Bearer " + token,
         });
       });
     } else
-      return response.json({
+      response.json({
         message: "invalid username or password",
       });
   });
