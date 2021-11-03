@@ -1,8 +1,8 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const Patient = require("../models/patient.model");
 
-const jwt = require("jsonwebtoken");
 const signup = async (request, response) => {
   const user = request.body.user;
   user.password = bcrypt.hashSync(user.password, 10);

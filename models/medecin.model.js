@@ -18,7 +18,7 @@ const MedecinSchema = mongoose.Schema({
     unique: true,
     required: true,
   },
-  numTel: {
+  numtel: {
     type: String,
     required: true,
   },
